@@ -67,6 +67,7 @@ public class LoginStepDefs {
 
     @When("the user logs in using following credentials {string} and {string}")
     public void the_user_logs_in_using_following_credentials_and(String expectedUsername, String expectedPassword) {
+        BrowserUtils.waitFor(3);
         loginPage.login(expectedUsername, expectedPassword);
     }
 
