@@ -15,6 +15,11 @@ Feature:
       | store manager | Dashboard       |
       | sales manager | Dashboard       |
 
+  Scenario: Go to Login page after closing the browser
+    When the user logs in using following credentials "user1" and "UserUser123"
+    And the user gets the current URL
+    When the user clicks on logout link under username
+
 
   Scenario Outline: Login functions with invalid info for different users
     When the user logs in using following credentials "<username>" and "<password>"
@@ -23,7 +28,7 @@ Feature:
       | username        | password    | message                        |
       | user            | wrong       | Invalid user name or password. |
       | user1           | 123         | Invalid user name or password. |
-      | user1            | UserUser123 | Invalid user name or password. |
+      | user1           | UserUser123 | Invalid user name or password. |
       |                 |             | Please fill out this field.    |
       |                 | UserUser123 | Please fill out this field.    |
       | user1           |             | Please fill out this field.    |

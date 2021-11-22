@@ -1,6 +1,5 @@
 package com.fleet.pages;
 
-import com.fleet.utilities.BrowserUtils;
 import com.fleet.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;

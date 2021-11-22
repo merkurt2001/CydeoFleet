@@ -5,11 +5,12 @@ import com.fleet.pages.LoginPage;
 import com.fleet.utilities.BrowserUtils;
 import com.fleet.utilities.ConfigurationReader;
 import com.fleet.utilities.Driver;
+import com.fleet.utilities.UserUtils;
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 
 public class LoginStepDefs {
@@ -24,32 +25,10 @@ public class LoginStepDefs {
 
     @When("the user enters valid credentials for each {string}")
     public void the_user_enters_valid_credentials_for_each(String userType) {
+        UserUtils.UserGenerator(userType);
+        loginPage.userName.sendKeys(UserUtils.username);
+        loginPage.password.sendKeys(UserUtils.password);
 
-        switch (userType){
-            case "driver":
-
-                loginPage.userName.sendKeys(ConfigurationReader.get("driver_username"));
-                String actual1 = loginPage.userName.getAttribute("validationMessage");
-                System.out.println(actual1);
-                JavascriptExecutor js = (JavascriptExecutor) Driver.get();
-                Boolean isValidInput = (Boolean)js.executeScript("return arguments[0].checkValidity();", loginPage.userName);
-                System.out.println(isValidInput);
-                String validationMessage = (String)js.executeScript("return arguments[0].validationMessage;", loginPage.userName);
-                System.out.println(validationMessage);
-                loginPage.password.sendKeys(ConfigurationReader.get("driver_password"));
-                break;
-            case "store manager":
-                loginPage.userName.sendKeys(ConfigurationReader.get("store_manager_username"));
-                loginPage.password.sendKeys(ConfigurationReader.get("store_manager_password"));
-                break;
-            case "sales manager":
-                loginPage.userName.sendKeys(ConfigurationReader.get("sales_manager_username"));
-                loginPage.password.sendKeys(ConfigurationReader.get("sales_manager_password"));
-                break;
-            default:
-                System.out.println("INVALID user type");
-                break;
-        }
 
     }
 
@@ -93,18 +72,18 @@ public class LoginStepDefs {
 //        Assert.assertEquals(expectedMessage, errorMessage);
 
 
-        if (expectedMessage.equals("Invalid user name or password.")){
+        if (expectedMessage.equals("Invalid user name or password.")) {
             Assert.assertEquals(expectedMessage, loginPage.errorMessage.getText());
-        }else if (expectedMessage.equals("Please fill out this field.")){
+        } else if (expectedMessage.equals("Please fill out this field.")) {
             String actual1 = loginPage.userName.getAttribute("validationMessage");
             String actual2 = loginPage.password.getAttribute("validationMessage");
 
 
-            if (loginPage.userName.getAttribute("value") == null && loginPage.password.getAttribute("value") == null){
+            if (loginPage.userName.getAttribute("value") == null && loginPage.password.getAttribute("value") == null) {
                 Assert.assertEquals(expectedMessage, actual1);
-            }else if (loginPage.password.getAttribute("value") == null){
+            } else if (loginPage.password.getAttribute("value") == null) {
                 Assert.assertEquals(expectedMessage, actual2);
-            }else if (loginPage.userName.getAttribute("value") == null){
+            } else if (loginPage.userName.getAttribute("value") == null) {
                 Assert.assertEquals(expectedMessage, actual1);
             }
         }
@@ -143,4 +122,11 @@ public class LoginStepDefs {
     }
 
 
+    @And("the user gets the current URL")
+    public void theUserGetsTheCurrentURL() {
+        BrowserUtils.waitFor(3);
+        String currentUrl = Driver.get().getCurrentUrl();
+        System.out.println(currentUrl);
+
+    }
 }
