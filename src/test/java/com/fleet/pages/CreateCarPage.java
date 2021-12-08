@@ -1,8 +1,8 @@
 package com.fleet.pages;
 
+import com.github.javafaker.Faker;
 import com.fleet.utilities.BrowserUtils;
 import com.fleet.utilities.Driver;
-import com.github.javafaker.Faker;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;

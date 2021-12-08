@@ -5,8 +5,8 @@ import com.fleet.pages.LoginPage;
 import com.fleet.utilities.BrowserUtils;
 import com.fleet.utilities.ConfigurationReader;
 import com.fleet.utilities.Driver;
+import com.fleet.utilities.PageObjectManager;
 import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
@@ -18,10 +18,11 @@ import java.util.ArrayList;
 
 public class LogoutStepDefs {
 
-    DashboardPage dashboardPage = new DashboardPage();
+    DashboardPage dashboardPage;
 
     @When("the user clicks on logout link under username")
     public void the_user_clicks_on_logout_link_under_username() {
+        dashboardPage= new PageObjectManager().getDashboardPage();
         dashboardPage.waitUntilLoaderScreenDisappear();
         dashboardPage.userName.click();
         dashboardPage.logOutLink.click();
@@ -37,7 +38,7 @@ public class LogoutStepDefs {
     @When("the user logs in using {string} and {string}")
     public void the_user_logs_in_using_and(String username, String password) {
         new LoginPage().login(username, password);
-        new DashboardPage().waitUntilLoaderScreenDisappear();
+        dashboardPage.waitUntilLoaderScreenDisappear();
 
 
     }

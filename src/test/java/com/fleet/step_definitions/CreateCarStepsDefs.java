@@ -3,22 +3,25 @@ package com.fleet.step_definitions;
 import com.fleet.pages.CreateCarPage;
 import com.fleet.pages.DashboardPage;
 import com.fleet.utilities.BrowserUtils;
+import com.fleet.utilities.PageObjectManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 
 public class CreateCarStepsDefs {
 
-    CreateCarPage createCarPage = new CreateCarPage();
-
+    CreateCarPage createCarPage;
+    DashboardPage dashboardPage;
 
     @And("the user navigates to {string} {string}")
     public void theUserNavigatesTo(String tab, String module) {
-        new DashboardPage().navigateToModule(tab, module);
+        dashboardPage = new PageObjectManager().getDashboardPage();
+        dashboardPage.navigateToModule(tab, module);
         BrowserUtils.waitFor(5);
     }
 
     @Then("the user clicks on Create Car button")
     public void theUserClicksOnCreateCarButton() {
+        createCarPage = new PageObjectManager().getCreateCarPage();
         createCarPage.waitUntilLoaderScreenDisappear();
         BrowserUtils.clickWithJS(createCarPage.createCarButton);
     }

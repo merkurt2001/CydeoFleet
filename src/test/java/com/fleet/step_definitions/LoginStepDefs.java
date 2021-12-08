@@ -2,10 +2,7 @@ package com.fleet.step_definitions;
 
 import com.fleet.pages.DashboardPage;
 import com.fleet.pages.LoginPage;
-import com.fleet.utilities.BrowserUtils;
-import com.fleet.utilities.ConfigurationReader;
-import com.fleet.utilities.Driver;
-import com.fleet.utilities.UserUtils;
+import com.fleet.utilities.*;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -15,8 +12,7 @@ import org.openqa.selenium.Keys;
 
 public class LoginStepDefs {
 
-    LoginPage loginPage = new LoginPage();
-    DashboardPage dashboardPage = new DashboardPage();
+    LoginPage loginPage;
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
@@ -26,9 +22,9 @@ public class LoginStepDefs {
     @When("the user enters valid credentials for each {string}")
     public void the_user_enters_valid_credentials_for_each(String userType) {
         UserUtils.UserGenerator(userType);
+        loginPage= new PageObjectManager().getLoginPage();
         loginPage.userName.sendKeys(UserUtils.username);
         loginPage.password.sendKeys(UserUtils.password);
-
 
     }
 
@@ -41,7 +37,7 @@ public class LoginStepDefs {
 
     @Then("the page subtitle is {string}")
     public void the_page_subtitle_is(String expectedSubtitle) {
-        Assert.assertEquals(expectedSubtitle, dashboardPage.pageSubTitle.getText());
+        Assert.assertEquals(expectedSubtitle, new DashboardPage().pageSubTitle.getText());
     }
 
     @When("the user logs in using following credentials {string} and {string}")
@@ -52,25 +48,6 @@ public class LoginStepDefs {
 
     @Then("the following {string} should be displayed")
     public void the_following_should_be_displayed(String expectedMessage) {
-
-//        String errorMessage="";
-//        try {
-//            errorMessage = loginPage.errorMessage.getText();
-//            System.out.println("errorMessage = " + errorMessage);
-//            if (errorMessage.isEmpty()){
-//                if (loginPage.userName.getAttribute("value") == null){
-//                    errorMessage=loginPage.userName.getAttribute("validationMessage");
-//                    System.out.println("errorMessage = " + errorMessage);
-//                } else if (loginPage.password.getAttribute("value") == null){
-//                    errorMessage=loginPage.password.getAttribute("validationMessage");
-//                    System.out.println("errorMessage = " + errorMessage);
-//                }
-//            }
-//        }catch (Exception e){
-//            System.out.println("In the catch line");
-//        }
-//        Assert.assertEquals(expectedMessage, errorMessage);
-
 
         if (expectedMessage.equals("Invalid user name or password.")) {
             Assert.assertEquals(expectedMessage, loginPage.errorMessage.getText());
