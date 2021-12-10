@@ -6,6 +6,7 @@ import com.fleet.utilities.BrowserUtils;
 import com.fleet.utilities.PageObjectManager;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
+import org.junit.Assert;
 
 public class CreateCarStepsDefs {
 
@@ -34,7 +35,7 @@ public class CreateCarStepsDefs {
 
     @Then("the user clicks on save changes button")
     public void theUserClicksOnSaveChangesButton() {
-
+        Assert.assertTrue(false);
         createCarPage.saveAndCloseButton.click();
 
 
