@@ -1,4 +1,3 @@
-
 Feature:
 
   Background:
@@ -76,6 +75,10 @@ Feature:
       | store manager | Dashboard       |
       | sales manager | Dashboard       |
 
+
+  @command
+  Scenario: Dynamic login
+    * the user enter valid credentials through command prompt
 
 
 

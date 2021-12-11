@@ -1,5 +1,6 @@
 package com.fleet.pages;
 
+import com.fleet.utilities.ConfigurationReader;
 import com.fleet.utilities.Driver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -7,14 +8,14 @@ import org.openqa.selenium.support.PageFactory;
 
 public class LoginPage {
 
-    public LoginPage(){
+    public LoginPage() {
         PageFactory.initElements(Driver.get(), this);
     }
 
-    @FindBy(id="prependedInput")
+    @FindBy(id = "prependedInput")
     public WebElement userName;
 
-    @FindBy(id="prependedInput2")
+    @FindBy(id = "prependedInput2")
     public WebElement password;
 
     @FindBy(name = "_submit")
@@ -34,8 +35,20 @@ public class LoginPage {
 
         userName.sendKeys(userNameStr);
         password.sendKeys(passwordStr);
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         submit.click();
         // verification that we logged
+    }
+
+    public void login() {
+        String username = System.getProperty("username") != null ? System.getProperty("username") : ConfigurationReader.get("driver_username");
+        String password = System.getProperty("password") != null ? System.getProperty("password") : ConfigurationReader.get("driver_password");
+        login(username, password);
+
     }
 
 
