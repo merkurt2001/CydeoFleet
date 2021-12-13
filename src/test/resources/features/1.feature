@@ -1,7 +1,6 @@
 @TRN-1241
 Feature: 
 
-	
 	@TRN-1239
 	Scenario: createcar
 
