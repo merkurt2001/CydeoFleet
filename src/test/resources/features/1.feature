@@ -4,6 +4,7 @@ Feature:
 	@TRN-1239
 	Scenario: createcar
 
+
 		 Given the user is on the login page
 		    When the user logs in using following credentials "storemanager51" and "UserUser123"
 		    And the user navigates to "Fleet" "Vehicles"
