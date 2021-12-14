@@ -76,9 +76,9 @@ Feature:
       | sales manager | Dashboard       |
 
 
-  @command
-  Scenario: Dynamic login
-    * the user enter valid credentials through command prompt
+  #@command
+  #Scenario: Dynamic login
+   # * the user enter valid credentials through command prompt
 
 
 

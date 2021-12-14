@@ -1,10 +1,6 @@
 @wip
 Feature: Create Car
 
-
-
-
-
   Scenario: Create car as a Store Manager
     Given the user is on the login page
     When the user logs in using following credentials "storemanager51" and "UserUser123"
