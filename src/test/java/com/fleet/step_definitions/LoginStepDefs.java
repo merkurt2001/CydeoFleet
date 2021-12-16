@@ -107,14 +107,14 @@ public class LoginStepDefs {
         System.out.println(currentUrl);
 
     }
-//    @Given("the user enter valid credentials through command prompt")
-//    public void the_user_enter_valid_credentials_through_command_prompt() {
-//        LoginPage loginPage = new LoginPage();
-//        loginPage.login();
-////        mvn verify -Dcucumber.options="--tags @command" -Dusername=salesmanager101 -Dpassword=UserUser123
-////        if the user do not assign the username and password via command line it gets from confg.reader
-//
-//    }
+    @Given("the user enter valid credentials through command prompt")
+    public void the_user_enter_valid_credentials_through_command_prompt() {
+        LoginPage loginPage = new LoginPage();
+        loginPage.login();
+//        mvn verify -Dcucumber.options="--tags @command" -Dusername=salesmanager101 -Dpassword=UserUser123
+//        if the user do not assign the username and password via command line it gets from confg.reader
+
+    }
 
 
 }

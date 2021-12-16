@@ -44,12 +44,12 @@ public class LoginPage {
         // verification that we logged
     }
 
-//    public void login() {
-//        String username = System.getProperty("username") != null ? System.getProperty("username") : ConfigurationReader.get("driver_username");
-//        String password = System.getProperty("password") != null ? System.getProperty("password") : ConfigurationReader.get("driver_password");
-//        login(username, password);
-//
-//    }
+    public void login() {
+        String username = System.getProperty("username") != null ? System.getProperty("username") : ConfigurationReader.get("driver_username");
+        String password = System.getProperty("password") != null ? System.getProperty("password") : ConfigurationReader.get("driver_password");
+        login(username, password);
+
+    }
 
 
 }
