@@ -1,17 +1,18 @@
 Feature:
 
-  Background:
 
-    Given the user is on the login page
 
+
+@smoke
   Scenario Outline: Login as a different user types
+  Given the user is on the login page
     When the user enters valid credentials for each "<userType>"
     And the user clicks login button
     Then the page subtitle is "<subtitle>"
     Examples:
       | userType      | subtitle        |
-      | driver        | Quick Launchpad |
-      | store manager | Dashboard       |
+    #  | driver        | Quick Launchpad |
+     # | store manager | Dashboard       |
       | sales manager | Dashboard       |
 
   Scenario: Go to Login page after closing the browser
