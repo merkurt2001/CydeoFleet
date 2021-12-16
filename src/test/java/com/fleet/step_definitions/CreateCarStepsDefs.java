@@ -35,7 +35,7 @@ public class CreateCarStepsDefs {
 
     @Then("the user clicks on save changes button")
     public void theUserClicksOnSaveChangesButton() {
-Assert.assertTrue(false);
+
         createCarPage.saveAndCloseButton.click();
 
 
