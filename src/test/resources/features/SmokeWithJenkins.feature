@@ -1,4 +1,4 @@
-@TRN-1241 @smoke
+@TRN-1241
 Feature: 
 
 	
