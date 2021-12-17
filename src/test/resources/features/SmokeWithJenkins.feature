@@ -1,6 +1,6 @@
 @TRN-1241
 Feature:
-#add new function2
+#add new function3
   @TRN-1239
   Scenario: createcar
     Given the user is on the login page
