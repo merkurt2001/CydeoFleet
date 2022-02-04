@@ -1,4 +1,4 @@
-@wip
+@1241
 Feature: Create Car
 
   Scenario: Create car as a Store Manager
