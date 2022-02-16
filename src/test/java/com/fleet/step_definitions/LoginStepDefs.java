@@ -61,6 +61,8 @@ public class LoginStepDefs {
         } else if (expectedMessage.equals("Please fill out this field.")) {
             String actual1 = loginPage.userName.getAttribute("validationMessage");
             String actual2 = loginPage.password.getAttribute("validationMessage");
+            System.out.println("actual2 = " + actual2);
+
 
 
             if (loginPage.userName.getAttribute("value") == null && loginPage.password.getAttribute("value") == null) {
@@ -76,6 +78,7 @@ public class LoginStepDefs {
     @When("the user clicks on Forgot your password link")
     public void the_user_clicks_on_Forgot_your_password_link() {
         BrowserUtils.waitFor(2);
+        loginPage=new PageObjectManager().getLoginPage();
         loginPage.forgotPassword.click();
     }
 

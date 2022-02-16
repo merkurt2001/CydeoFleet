@@ -67,12 +67,10 @@ Feature: Login Function
       | user1    |             | Please fill out this field.    |
 
 
-  @command
-  Scenario: Dynamic login
-    * the user enter valid credentials through command prompt
+
 
   Scenario: Password text entered into the 'Password' field is toggled to hide its visibility
-    * the user logs in using following credentials "driver" and "UserUser123"
+    * the user logs in using following credentials "user1" and "UserUser123"
     * the user should see the password in bullet signs by default
 
 
@@ -91,7 +89,7 @@ Feature: Login Function
 
 
   Scenario: Remember me checkbox
-    * the user logs in using following credentials "driver" and "UserUser123"
+    * the user logs in using following credentials "user1" and "UserUser123"
     * the user clicks Remember me on this computer checkbox
     * Remember me on this computer checkbox should be selected
 
@@ -105,9 +103,11 @@ Feature: Login Function
 
 
 
-
   Scenario: Background color  of "LOGIN"  button
     * the user should see the background color of "LOGIN" button as "#0c84a3"
+
+
+
 
 
 
