@@ -1,75 +1,13 @@
-Feature:
+Feature: Login Function
 
   Background:
-    Given the user is on the login page
+    * the user is on the login page
 
-  @smoke
-  Scenario Outline: Login as a different user types
+  Scenario Outline: Login as a different user types <userType>
 
-    When the user enters valid credentials for each "<userType>"
-    And the user clicks login button
-    Then the page subtitle is "<subtitle>"
-    Examples:
-      | userType      | subtitle  |
-    #  | driver        | Quick Launchpad |
-     # | store manager | Dashboard       |
-      | sales manager | Dashboard |
-
-  Scenario: Go to Login page after closing the browser
-    When the user logs in using following credentials "user1" and "UserUser123"
-    And the user gets the current URL
-    When the user clicks on logout link under username
-
-
-  Scenario Outline: Login functions with invalid info for different users
-    When the user logs in using following credentials "<username>" and "<password>"
-    Then the following "<message>" should be displayed
-    Examples:
-      | username        | password    | message                        |
-      | user            | wrong       | Invalid user name or password. |
-      | user1           | 123         | Invalid user name or password. |
-      | user1           | UserUser123 | Invalid user name or password. |
-      |                 |             | Please fill out this field.    |
-      |                 | UserUser123 | Please fill out this field.    |
-      | user1           |             | Please fill out this field.    |
-      | salesmanager101 | 123         | Invalid user name or password. |
-      | user            | UserUser123 | Invalid user name or password. |
-      |                 | UserUser123 | Please fill out this field.    |
-      | salesmanager101 |             | Please fill out this field.    |
-      | storemanager51  | 123         | Invalid user name or password. |
-      | user            | UserUser123 | Invalid user name or password. |
-      |                 | UserUser123 | Please fill out this field.    |
-      | storemanager51  |             | Please fill out this field.    |
-
-
-  Scenario Outline: Password in bullet signs
-    When the user enters valid credentials for each "<userType>"
-    Then the user should see the password in bullet signs by default
-    Examples:
-      | userType      |
-      | driver        |
-      | store manager |
-      | sales manager |
-
-  Scenario: Forgot password page
-    When the user clicks on Forgot your password link
-    Then the user should land on "Forgot Password" page
-
-  Scenario Outline: Remember me checkbox
-    When the user enters valid credentials for each "<userType>"
-    And the user clicks Remember me on this computer checkbox
-    Then Remember me on this computer checkbox should be selected
-    Examples:
-      | userType      |
-      | driver        |
-      | store manager |
-      | sales manager |
-
-
-  Scenario Outline: Login with ENTER key as a different user types
-    When the user enters valid credentials for each "<userType>"
-    And the user clicks Enter button of keyboard
-    Then the page subtitle is "<subtitle>"
+    * the user enters valid credentials for each "<userType>"
+    * the user clicks login button
+    * the page subtitle is "<subtitle>"
     Examples:
       | userType      | subtitle        |
       | driver        | Quick Launchpad |
@@ -77,9 +15,99 @@ Feature:
       | sales manager | Dashboard       |
 
 
+  Scenario Outline: Breadcrumb, Page Heading, Page URL, Page Title and Modules of 'Dashboard Page'
+    * the user logs in using following credentials "storemanager51" and "UserUser123"
+    * the user should see following modules
+      | Dashboards         |
+      | Fleet              |
+      | Customers          |
+      | Sales              |
+      | Activities         |
+      | Marketing          |
+      | Reports & Segments |
+      | System             |
+
+    * Page element  "<Breadcrumb>"  "<Page Heading>"  "<Page URL>"  "<Page Title>" is as expected
+
+    Examples:
+      | Breadcrumb            | Page Heading | Page URL                  | Page Title |
+      | Dashboards/ Dashboard | Dashboard    | https://qa.intabella.com/ | Dashboard  |
+
+  @wip
+  Scenario: The system shouldn't allow users to login without valid credentials
+    * the user logs in using following credentials "user1" and "UserUser123"
+    * the user gets the current URL
+    * the user log out and paste the current URL
+    * User should not inside the main page
+
+  Scenario: Closing the Browser without logging out, and opening the application in the Browser again
+    * the user logs in using following credentials "user1" and "UserUser123"
+    * the user closes the tab
+    * the user is again on the login page
+
+  Scenario: The leading and trailing spaces entered into the Username field are trimmed
+    * the user logs in using following credentials "        storemanager51     " and "UserUser123"
+    * the page subtitle is "Dashboard"
+
+
+  Scenario: All the fields in the Login page have the proper placeholders
+    * Username and password input boxes have proper placeholders
+
+
+  Scenario Outline: Login functions with invalid info for different users
+    * the user logs in using following credentials "<username>" and "<password>"
+    * the following "<message>" should be displayed
+    Examples:
+      | username | password    | message                        |
+      | user1    | wrong       | Invalid user name or password. |
+      | wrong    | wrong       | Invalid user name or password. |
+      | wrong    | UserUser123 | Invalid user name or password. |
+      |          |             | Please fill out this field.    |
+      |          | UserUser123 | Please fill out this field.    |
+      | user1    |             | Please fill out this field.    |
+
+
   @command
   Scenario: Dynamic login
     * the user enter valid credentials through command prompt
+
+  Scenario: Password text entered into the 'Password' field is toggled to hide its visibility
+    * the user logs in using following credentials "driver" and "UserUser123"
+    * the user should see the password in bullet signs by default
+
+
+  Scenario: Password is not visible in the Page Source
+    * the user enters valid credentials to password input box
+    * the password is not visible in the Page Source
+
+
+  Scenario: Copying of the text entered into the Password field
+    * the user enters valid credentials to password input box
+    * the system should not allow user to copy password
+
+  Scenario: Forgot password page
+    * the user clicks on Forgot your password link
+    * the user should land on "Forgot Password" page
+
+
+  Scenario: Remember me checkbox
+    * the user logs in using following credentials "driver" and "UserUser123"
+    * the user clicks Remember me on this computer checkbox
+    * Remember me on this computer checkbox should be selected
+
+  Scenario Outline: Login with ENTER key as a different user types
+    * the user enters valid credentials for each "<userType>"
+    * the user clicks Enter button of keyboard
+    * the page subtitle is "<subtitle>"
+    Examples:
+      | userType      | subtitle        |
+      | driver        | Quick Launchpad |
+
+
+
+
+  Scenario: Background color  of "LOGIN"  button
+    * the user should see the background color of "LOGIN" button as "#0c84a3"
 
 
 

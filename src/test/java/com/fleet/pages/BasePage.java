@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.List;
+
 
 public abstract class BasePage {
     /***
@@ -20,6 +22,9 @@ public abstract class BasePage {
      *     We locate all the common elements and functionality for all the pages/modules here related to application.
      *     All other pages that have those functionality will extend the BasePage. it is application specific.
      */
+
+    @FindBy(css = "span.title-level-1")
+    public List<WebElement> menuOptions;
 
     @FindBy(css = "div[class='loader-mask shown']")
     @CacheLookup

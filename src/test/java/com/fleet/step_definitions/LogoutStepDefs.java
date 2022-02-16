@@ -26,6 +26,7 @@ public class LogoutStepDefs {
         dashboardPage.waitUntilLoaderScreenDisappear();
         dashboardPage.userName.click();
         dashboardPage.logOutLink.click();
+
     }
 
     @When("the user clicks step back button")
@@ -45,6 +46,7 @@ public class LogoutStepDefs {
 
     @And("the user closes the tab")
     public void theUserClosesTheTab() {
+        BrowserUtils.waitFor(3);
         ((JavascriptExecutor) Driver.get()).executeScript("window.open('about:blank','_blank');");
         new WebDriverWait(Driver.get(), 3).until(ExpectedConditions.numberOfWindowsToBe(2));
 
@@ -60,13 +62,14 @@ public class LogoutStepDefs {
     public void theUserIsAgainOnTheLoginPage() {
         String url = ConfigurationReader.get("url");
         Driver.get().get(url);
+        Assert.assertEquals("https://qa.intabella.com/", Driver.get().getCurrentUrl());
 
     }
     @And("the user should not login the page successfully")
     public void theUserShouldNotLoginThePageSuccessfully() {
         BrowserUtils.waitFor(2);
         System.out.println(Driver.get().getCurrentUrl());
-        Assert.assertEquals("https://qa.translantik.com/user/login", Driver.get().getCurrentUrl());
+        Assert.assertEquals("https://qa.intabella.com", Driver.get().getCurrentUrl());
     }
 
 }
