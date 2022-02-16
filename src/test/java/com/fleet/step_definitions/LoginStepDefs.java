@@ -119,7 +119,7 @@ public class LoginStepDefs {
         System.out.println(currentUrl);
 
     }
-
+//not related to the feature
     @Given("the user enter valid credentials through command prompt")
     public void the_user_enter_valid_credentials_through_command_prompt() {
         LoginPage loginPage = new LoginPage();
