@@ -49,7 +49,7 @@ Feature: Login Function
     * the user logs in using following credentials "        storemanager51     " and "UserUser123"
     * the page subtitle is "Dashboard"
 
-
+  @wip
   Scenario: All the fields in the Login page have the proper placeholders
     * Username and password input boxes have proper placeholders
 
