@@ -33,7 +33,7 @@ Feature: Login Function
       | Breadcrumb            | Page Heading | Page URL                  | Page Title |
       | Dashboards/ Dashboard | Dashboard    | https://qa.intabella.com/ | Dashboard  |
 
-  @wip
+
   Scenario: The system shouldn't allow users to login without valid credentials
     * the user logs in using following credentials "user1" and "UserUser123"
     * the user gets the current URL
