@@ -93,13 +93,18 @@ Feature: Login Function
     * the user clicks Remember me on this computer checkbox
     * Remember me on this computer checkbox should be selected
 
-  Scenario Outline: Login with ENTER key as a different user types
-    * the user enters valid credentials for each "<userType>"
+
+  Scenario Outline: Validate to login by using the Keyboard keys
+    * the user enters valid credentials to "<username>" input box
+    * the user hits keyboard "<button>"
+    * the cursor should be in password input box
+    * the user enters valid credentials to password input box
     * the user clicks Enter button of keyboard
     * the page subtitle is "<subtitle>"
     Examples:
-      | userType      | subtitle        |
-      | driver        | Quick Launchpad |
+      | button | username        | subtitle        |
+      | ENTER  | user1           | Quick Launchpad |
+      | TAB    | salesmanager105 | Dashboard       |
 
 
 

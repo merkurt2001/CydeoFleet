@@ -9,8 +9,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 
+import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import java.util.List;
 
 public class LoginStepDefs {
@@ -62,8 +67,6 @@ public class LoginStepDefs {
             String actual1 = loginPage.userName.getAttribute("validationMessage");
             String actual2 = loginPage.password.getAttribute("validationMessage");
             System.out.println("actual2 = " + actual2);
-
-
 
             if (loginPage.userName.getAttribute("value") == null && loginPage.password.getAttribute("value") == null) {
                 Assert.assertEquals(expectedMessage, actual1);
@@ -142,6 +145,13 @@ public class LoginStepDefs {
 
     }
 
+    @Given("the user enters valid credentials to {string} input box")
+    public void the_user_enters_valid_credentials_to_input_box(String userName) {
+        loginPage = new PageObjectManager().getLoginPage();
+        loginPage.userName.sendKeys(userName);
+    }
+
+
     @Given("the user enters valid credentials to password input box")
     public void the_user_enters_valid_credentials_to_password_input_box() {
         loginPage = new PageObjectManager().getLoginPage();
@@ -157,20 +167,25 @@ public class LoginStepDefs {
 
 
     @Given("the system should not allow user to copy password")
-    public void the_system_should_not_allow_user_to_copy_password() {
-
+    public void the_system_should_not_allow_user_to_copy_password() throws IOException, UnsupportedFlavorException {
         BrowserUtils.waitFor(3);
-        loginPage.password.click();
-        loginPage.password.sendKeys(Keys.CONTROL, "a");
-        loginPage.password.sendKeys(Keys.CONTROL, "c");
-        loginPage.userName.clear();
-        loginPage.userName.click();
-        loginPage.userName.sendKeys(Keys.CONTROL, "v");
-        String passwordAttribute = loginPage.password.getAttribute("value");
-        String userNameAttribute = loginPage.userName.getAttribute("value");
-        System.out.println(userNameAttribute);
-        System.out.println(passwordAttribute);
-        Assert.assertNotEquals(userNameAttribute, passwordAttribute);
+        new LoginPage().password.sendKeys(Keys.chord(Keys.CONTROL,"A"));
+        new LoginPage().password.sendKeys(Keys.chord(Keys.CONTROL,"C"));
+        String localClipboardData = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+        Assert.assertNotEquals("UserUser123", localClipboardData);
+        System.out.println(localClipboardData);
+
+//        loginPage.password.click();
+//        loginPage.password.sendKeys(Keys.CONTROL, "a");
+//        loginPage.password.sendKeys(Keys.CONTROL, "c");
+//        loginPage.userName.clear();
+//        loginPage.userName.click();
+//        loginPage.userName.sendKeys(Keys.CONTROL, "v");
+//        String passwordAttribute = loginPage.password.getAttribute("value");
+//        String userNameAttribute = loginPage.userName.getAttribute("value");
+//        System.out.println(userNameAttribute);
+//        System.out.println(passwordAttribute);
+//        Assert.assertNotEquals(userNameAttribute, passwordAttribute);
 
     }
 
@@ -224,6 +239,24 @@ public class LoginStepDefs {
         Driver.get().get(currentUrl);
 //        String lastCurrentUrl = Driver.get().getCurrentUrl();
 //        Assert.assertNotEquals(lastCurrentUrl, currentUrl);
+    }
+
+    @Given("the user hits keyboard {string}")
+    public void the_user_hits_keyboard(String keyboardButton) {
+        WebElement currentElement = Driver.get().switchTo().activeElement();
+        switch (keyboardButton){
+            case "ENTER":
+                currentElement.sendKeys(Keys.ENTER);
+                break;
+            case "TAB":
+                currentElement.sendKeys(Keys.TAB);
+        }
+    }
+    @Given("the cursor should be in password input box")
+    public void the_cursor_should_be_in_password_input_box() {
+        boolean actualCursor = new LoginPage().password.equals(Driver.get().switchTo().activeElement());
+        System.out.println(actualCursor);
+        Assert.assertTrue(actualCursor);
     }
 
 }
