@@ -13,8 +13,8 @@ import org.junit.runner.RunWith;
                 "html:target/default-html-reports"},
         features = "src/test/resources/features",
         glue = "com/fleet/step_definitions",
-        dryRun = true,
-        tags = "@tab"
+        dryRun = false,
+        tags = "@TRN-1241"
 )
 public class CukesRunner {
 }

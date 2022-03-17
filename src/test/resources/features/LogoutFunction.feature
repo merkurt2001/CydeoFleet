@@ -36,4 +36,4 @@ Feature:
 		When the user logs in using "user1" and "UserUser123"
 		And the user closes the tab
 		When the user is again on the login page
-		Then the user should not login the page successfully
+		Then the user should login the page successfully

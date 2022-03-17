@@ -8,6 +8,7 @@ import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -20,9 +21,10 @@ import java.util.List;
 
 public class LoginStepDefs {
 
-    LoginPage loginPage;
-    DashboardPage dashboardPage;
+    LoginPage loginPage = new PageObjectManager().getLoginPage();
+    DashboardPage dashboardPage = new PageObjectManager().getDashboardPage();
     String currentUrl;
+
 
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() {
@@ -32,7 +34,6 @@ public class LoginStepDefs {
     @When("the user enters valid credentials for each {string}")
     public void the_user_enters_valid_credentials_for_each(String userType) {
         UserUtils.UserGenerator(userType);
-        loginPage = new PageObjectManager().getLoginPage();
         loginPage.userName.sendKeys(UserUtils.username);
         loginPage.password.sendKeys(UserUtils.password);
 
@@ -48,13 +49,12 @@ public class LoginStepDefs {
     @Then("the page subtitle is {string}")
     public void the_page_subtitle_is(String expectedSubtitle) {
         BrowserUtils.waitFor(2);
-        Assert.assertEquals(expectedSubtitle, new DashboardPage().pageSubTitle.getText());
+        Assert.assertEquals(expectedSubtitle, dashboardPage.pageSubTitle.getText());
     }
 
     @When("the user logs in using following credentials {string} and {string}")
     public void the_user_logs_in_using_following_credentials_and(String expectedUsername, String expectedPassword) {
         BrowserUtils.waitFor(3);
-        loginPage = new PageObjectManager().getLoginPage();
         loginPage.login(expectedUsername, expectedPassword);
     }
 
@@ -81,7 +81,6 @@ public class LoginStepDefs {
     @When("the user clicks on Forgot your password link")
     public void the_user_clicks_on_Forgot_your_password_link() {
         BrowserUtils.waitFor(2);
-        loginPage=new PageObjectManager().getLoginPage();
         loginPage.forgotPassword.click();
     }
 
@@ -122,10 +121,10 @@ public class LoginStepDefs {
         System.out.println(currentUrl);
 
     }
-//not related to the feature
+
+    //not related to the feature
     @Given("the user enter valid credentials through command prompt")
     public void the_user_enter_valid_credentials_through_command_prompt() {
-        LoginPage loginPage = new LoginPage();
         loginPage.login();
 //        mvn verify -Dcucumber.options="--tags @command" -Dusername=salesmanager101 -Dpassword=UserUser123
 //        if the user do not assign the username and password via command line it gets from confg.reader
@@ -134,7 +133,6 @@ public class LoginStepDefs {
 
     @Given("the user should see the background color of {string} button as {string}")
     public void the_user_should_see_the_background_color_of_button_as(String LoginBtn, String colorCode) {
-        loginPage = new PageObjectManager().getLoginPage();
         BrowserUtils.waitFor(2);
         String cssValue = loginPage.submit.getCssValue("background-color");
         System.out.println(cssValue);
@@ -147,14 +145,12 @@ public class LoginStepDefs {
 
     @Given("the user enters valid credentials to {string} input box")
     public void the_user_enters_valid_credentials_to_input_box(String userName) {
-        loginPage = new PageObjectManager().getLoginPage();
         loginPage.userName.sendKeys(userName);
     }
 
 
     @Given("the user enters valid credentials to password input box")
     public void the_user_enters_valid_credentials_to_password_input_box() {
-        loginPage = new PageObjectManager().getLoginPage();
         loginPage.password.sendKeys("UserUser123");
     }
 
@@ -169,8 +165,8 @@ public class LoginStepDefs {
     @Given("the system should not allow user to copy password")
     public void the_system_should_not_allow_user_to_copy_password() throws IOException, UnsupportedFlavorException {
         BrowserUtils.waitFor(3);
-        new LoginPage().password.sendKeys(Keys.chord(Keys.CONTROL,"A"));
-        new LoginPage().password.sendKeys(Keys.chord(Keys.CONTROL,"C"));
+        loginPage.password.sendKeys(Keys.chord(Keys.CONTROL, "A"));
+        loginPage.password.sendKeys(Keys.chord(Keys.CONTROL, "C"));
         String localClipboardData = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
         Assert.assertNotEquals("UserUser123", localClipboardData);
         System.out.println(localClipboardData);
@@ -191,7 +187,6 @@ public class LoginStepDefs {
 
     @Given("Username and password input boxes have proper placeholders")
     public void username_and_password_input_boxes_have_proper_placeholders() {
-        loginPage= new PageObjectManager().getLoginPage();
         String userNameAttribute = loginPage.userName.getAttribute("placeholder");
         String passwordAttribute = loginPage.password.getAttribute("placeholder");
 
@@ -207,7 +202,7 @@ public class LoginStepDefs {
         //get the list of webelement and convert them to list of string and assert
         List<String> actualOptions = BrowserUtils.getElementsText(new DashboardPage().menuOptions);
 
-        Assert.assertEquals(menuOptions,actualOptions);
+        Assert.assertEquals(menuOptions, actualOptions);
         System.out.println("menuOptions = " + menuOptions);
         System.out.println("actualOptions = " + actualOptions);
     }
@@ -215,7 +210,7 @@ public class LoginStepDefs {
     @Given("Page element  {string}  {string}  {string}  {string} is as expected")
     public void page_element_is_as_expected(String expectedBreadCrumb, String expectedHeading, String expectedURL, String expectedTitle) {
         String actualBreadCrumb = new DashboardPage().breadCrumb.getText();
-        Assert.assertEquals(expectedBreadCrumb,actualBreadCrumb);
+        Assert.assertEquals(expectedBreadCrumb, actualBreadCrumb);
         Assert.assertEquals(Driver.get().getCurrentUrl(), expectedURL);
         Assert.assertTrue(Driver.get().getTitle().contains(expectedTitle));
         Assert.assertEquals(expectedHeading, new DashboardPage().pageSubTitle.getText());
@@ -224,7 +219,7 @@ public class LoginStepDefs {
 
     @Given("the user log out and paste the current URL")
     public void the_user_log_out_and_paste_the_current_URL() {
-        dashboardPage= new PageObjectManager().getDashboardPage();
+
         dashboardPage.waitUntilLoaderScreenDisappear();
 //        dashboardPage.userName.click();
 //        dashboardPage.logOutLink.click();
@@ -244,7 +239,7 @@ public class LoginStepDefs {
     @Given("the user hits keyboard {string}")
     public void the_user_hits_keyboard(String keyboardButton) {
         WebElement currentElement = Driver.get().switchTo().activeElement();
-        switch (keyboardButton){
+        switch (keyboardButton) {
             case "ENTER":
                 currentElement.sendKeys(Keys.ENTER);
                 break;
@@ -252,11 +247,19 @@ public class LoginStepDefs {
                 currentElement.sendKeys(Keys.TAB);
         }
     }
+
     @Given("the cursor should be in password input box")
     public void the_cursor_should_be_in_password_input_box() {
-        boolean actualCursor = new LoginPage().password.equals(Driver.get().switchTo().activeElement());
-        System.out.println(actualCursor);
-        Assert.assertTrue(actualCursor);
+//        with JS methods
+//        String str ="return document.querySelector(\"#prependedInput2\")";
+//        JavascriptExecutor js = (JavascriptExecutor) Driver.get();
+//        WebElement passwordInputBox = (WebElement) js.executeScript(str);
+//        Assert.assertEquals(passwordInputBox, loginPage.password);
+//        System.out.println("passwordInputBox = " + passwordInputBox);
+//        System.out.println(loginPage.password);
+
+        Assert.assertEquals(loginPage.password, Driver.get().switchTo().activeElement());
+
     }
 
 }

@@ -18,11 +18,11 @@ import java.util.ArrayList;
 
 public class LogoutStepDefs {
 
-    DashboardPage dashboardPage;
+    DashboardPage dashboardPage=new PageObjectManager().getDashboardPage();
 
     @When("the user clicks on logout link under username")
     public void the_user_clicks_on_logout_link_under_username() {
-        dashboardPage= new PageObjectManager().getDashboardPage();
+
         dashboardPage.waitUntilLoaderScreenDisappear();
         dashboardPage.userName.click();
         dashboardPage.logOutLink.click();
@@ -65,11 +65,11 @@ public class LogoutStepDefs {
         Assert.assertEquals("https://qa.intabella.com/", Driver.get().getCurrentUrl());
 
     }
-    @And("the user should not login the page successfully")
-    public void theUserShouldNotLoginThePageSuccessfully() {
+    @And("the user should login the page successfully")
+    public void theUserShouldLoginThePageSuccessfully() {
         BrowserUtils.waitFor(2);
         System.out.println(Driver.get().getCurrentUrl());
-        Assert.assertEquals("https://qa.intabella.com", Driver.get().getCurrentUrl());
+        Assert.assertEquals("https://qa.intabella.com/", Driver.get().getCurrentUrl());
     }
 
 }
