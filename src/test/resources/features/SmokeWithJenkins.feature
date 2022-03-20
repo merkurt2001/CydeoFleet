@@ -1,6 +1,6 @@
 @TRN-1241
 Feature:
-#add new A
+#add new wille
   @TRN-1239
   Scenario: createcar
     Given the user is on the login page
